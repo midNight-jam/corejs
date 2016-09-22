@@ -1,0 +1,64 @@
+<html>
+<head></head>
+<title></title>
+<body>
+	<script>
+	// often its needed  to have objects with the same / similar structure. 
+	// But with diff state values, in this case we may use a constructor function 
+	// which produces object by specified pattern.
+	// Besides creation of object constructor function also does one important thing
+	// it automatically sets the prototype __proto__ property of newly created objects. HOW??
+	// This prototype object is stored in ConstructorFunction.prototype property.
+
+	// a constructor function, its actually a "pattern" (not design pattern, a literal pattern) 
+	// which creates object. 
+	function Foo(y){
+	/*which may create objects, by specified pattern : 
+	after creation they have their own "y" property*/
+		this.y = y;
+	
+	console.log(Foo.prototype);
+	/* before setting the prototype property, all the objs created using this constructor,
+	 will have their __proto__ property pointing to the Object. But after assigning the prtotype
+	 property their __proto__ property will point to the object assigned by the constructor's 
+	 .prototype property.*/
+	Foo.prototype.x = 20;
+	Foo.prototype.inheritedCalculate = function(zz){
+				return this.x + this.y + zz;
+			};
+	}
+	
+	//main
+	(function(){
+	/* now lets create  objects using "pattern" Foo
+	*/
+		var a = new Foo(11);
+		var b = new Foo(22);
+		//call the inherited methods
+		console.log(a.inheritedCalculate(50));
+		console.log(b.inheritedCalculate(100));
+		//see how the prototype properties are assigned correctly,
+		// we are referencing the properties that we expected
+		
+		console.log(	a.__proto__ === Foo.prototype);
+		console.log(	b.__proto__ === Foo.prototype);
+		
+		// also foo.prototype also automatically creates a special property "constructor",
+		// which is a reference to the constructor property itself. 
+		console.log(	Foo.prototype.constructor === Foo );
+		
+		// instances "b" and "c" may found it via
+		// delegation and use to check their constructor
+		console.log(	a.constructor === Foo );
+		console.log(	b.constructor === Foo );
+
+		console.log(	b.calculate === a.__proto__.calculate);
+		console.log(	b.calculate === b.__proto__.calculate);
+		
+		// Foo.__proto__ is of type function(Function.prototype), we created this pattern as function. 
+		console.log(Foo.__proto__);
+		})();
+	</script>
+	open dev tools !
+</body>
+</html>

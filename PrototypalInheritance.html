@@ -1,0 +1,60 @@
+<html>
+<head></head>
+<title></title>
+<body>
+	<script>
+	
+	// if an undefined is found while doing math operation, then it resultsin NaN value.
+	// notice the "this" used in inherited method is set to the original object,
+	// but not to the prototype object in which the method is found,
+	// that is in below code the this is taken from derivedOne & derivedTwo.
+	// 	
+	function protypalInheritance(){
+			var base = {
+				x:10,
+				calculateSum:function( z ){
+				var sum  = this.x + this.y + z;
+				console.log("Sum : "+sum);
+				}
+			};
+			
+			var derivedOne = {
+				y:20,
+				__proto__ : base
+			};
+
+			var derivedTwo = {
+				y:40,
+				z:50,
+				__proto__ : base
+			};
+			
+			derivedOne.calculateSum(7);
+			derivedTwo.calculateSum(3);
+			console.log('Here is obj ' + derivedOne);	
+			console.log('Here is objs prototype ' + derivedOne.__proto__);	
+	
+	}
+	// ES5 alternative to prototype based inheritance
+	function objectCreate(){
+			var base = {
+			x:10,
+			calculateSum:function( z ){
+				var sum  = this.x + this.y + z;
+				console.log("Sum : "+sum);
+				}
+			};
+			// notice how we are adding a new property while inherting from base & assigning a vlaue to
+			// that property {< new prtoperty name>{value: <given value>}}
+			var derivedOne = Object.create(base,{y:{value:20}});  
+			console.log('trying sum from create type : ' + derivedOne.calculateSum(9));
+	}
+	//main
+	(function(){
+		protypalInheritance();
+		objectCreate();
+	})();
+	</script>
+	open dev tools !
+</body>
+</html>
