@@ -1,0 +1,116 @@
+<body>
+	<script>
+		////////////////////////////////////
+		// Stack using Array
+		////////////////////////////////////
+		var stack  = [];
+		stack.push(2);
+		stack.push(5);
+		var i = stack.pop();
+		console.log(i);
+		console.log(stack.length);
+		console.log(stack);
+		
+		
+		////////////////////////////////////
+		//Queue using array
+		////////////////////////////////////
+		var queue = [];
+		queue.push(2);
+		queue.push(5);
+		var i = queue.shift();
+		console.log(queue);
+		console.log(i);
+		console.log(queue.length);
+		
+		
+		////////////////////////////////////
+		// Double Ended Queue
+		////////////////////////////////////
+		var deQue = [];
+		deQue.push(2);
+		deQue.push(5);
+		deQue.push(8);
+		var head = deQue.shift();	// removal from head
+		var tail = deQue.pop();	// removal  from tail
+		console.log(head);
+		console.log(tail);
+		console.log(deQue);
+		console.log(deQue.length);
+		
+		deQue.unshift(1);	// insertion at head
+		deQue.push(7);		// insertion at tail
+		console.log(deQue.length);
+		
+		
+		////////////////////////////////////
+		//String Concatenation vs Array.Join
+		////////////////////////////////////
+		var strs = ["add","me","up","wisely"];
+		var formed = [];
+		strs.forEach(function(ele){
+		formed.push(ele);
+		});
+		finalStr = formed.join('');
+		console.log(finalStr);
+		
+		
+		////////////////////////////////////
+		// Binding methods to objects
+		////////////////////////////////////
+		this.x = 9;
+		var module = {
+		x: 81,
+		getX : function(){
+					return this.x;
+			}
+		};
+		
+		console.log(module.getX());
+		
+		// Binding is essentially attaching a scope to a method so that it can access the members defined in that 
+		// scope using "this"
+		var fetcher = module.getX; // assigning the getX method to another fundtoin
+		console.log("Fetcher called "+fetcher()); 
+		var boundedGetX = fetcher.bind(module);
+		console.log("Bounded Get X "+boundedGetX());
+		
+		
+		////////////////////////////////////
+		// Custom Comparators
+		////////////////////////////////////
+		
+		
+		var list = [5,10,2,1];
+		console.log(list);
+		list.sort();		
+		// this sorting is not numerical sorting, because javascript converts these numbers to string.
+		//	Thats why, while comparing it is comapring two strings and not two numbers.	
+		console.log(list);	// --> [1,10,2,5]
+		
+		var ascCMP = function(a,b){
+			return a - b;	// ascendding comparision
+		}
+		list.sort(ascCMP);
+		console.log(list);	
+		
+		var descCMP = function(a,b){
+			return b - a;	// descending comparision
+		}
+		list.sort(descCMP);
+		console.log(list);	
+		
+		
+		////////////////////////////////////
+		// null, undefined, and delete
+		////////////////////////////////////
+		
+		console.log(K);	// undefined because its not declared
+		var K;
+		console.log(K);		// undefined because its declared but not assigned
+		console.log(K==null);	// true
+		console.log(K===undefined); // true
+		console.log(null == undefined); // true
+		console.log(null === undefined); // false
+	</script>
+</body>
