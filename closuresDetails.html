@@ -1,0 +1,109 @@
+<body>
+	<script>
+		function testFn(Funarg){
+			Funarg(10);
+			Funarg(20);
+			
+		}
+		
+		testFn((function(arg){
+			var localVar = 5;
+			console.log(arg + localVar);
+		}));
+		
+		function testFreeVar(){
+			var localVar = 10;
+			
+			return function innerFn(innnerParam){
+				console.log(innnerParam + localVar);
+			}
+		}
+		
+		var someFn = testFreeVar();
+		someFn(15);
+		
+		var x = 10;
+		function boo(){
+			console.log(x);
+		}
+		
+		(function(funArg){
+			var x = 30;
+			funArg();
+		})(boo);
+		
+		
+		//////////////////
+		// Shared Parent Scope between all inner functions
+		//////////////////
+		
+		var firstClosure;
+		var secondClosure;
+		
+		function foo(){
+			var x = 1;
+			firstClosure = function (){ return ++x;};
+			secondClosure = function (){ return --x;};
+		
+			x = 2;
+			console.log(firstClosure());	// 3
+		}
+		foo();
+		
+		console.log(firstClosure());	// 4
+		console.log(secondClosure());	// 3
+		
+		var data = [];
+		for(var k = 0; k < 3; k++){
+			data[k] = function (){
+				console.log(k);
+			};
+		}
+		
+		data[0]();// 3 beacuse parent context is shared among all 3 inner functions
+		data[1]();// 3
+		data[2]();// 3
+
+
+		var additionalData = [];
+		
+		for(var k = 0;  k < 3; k++){
+			additionalData[k] = (function _helperContext(x){
+				return function(){
+					console.log(x);
+				};
+			})(k);	// passing K value to inner function while calling
+			// being called / activated this helper function creates new context/activation object every time 
+		}
+		
+		additionalData[0]();	//0
+		additionalData[1]();	//1
+		additionalData[2]();	//2
+		
+		
+		//////////////////
+		// Deferred Execution
+		//////////////////
+		var a = 10;
+		setTimeout(function(){
+			console.log(a);
+		},1000);
+		
+		
+		
+		//////////////////
+		// Encapsulated Scope for purpose of hiding auxiliary objects
+		//////////////////
+		
+		var foo = {};
+		// initialization
+		(function(object){
+			var x = 10;
+			// attaching a property functoin to the passed function
+			object.getX = function _getX(){
+				return x;
+			};
+		})(foo);
+		console.log(foo.getX());	// get Closured x - 10
+		</script>
+</body>
