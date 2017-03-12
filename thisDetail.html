@@ -19,5 +19,120 @@
 		// 10  - beacause when called this will point to foo context,
 		// and in that context x is 10;
 	
+		
+		
+		////////////////////////////////////
+		// This
+		////////////////////////////////////
+		
+		function foo2(){
+			console.log(this);
+		}
+		foo2(); // global
+		console.log( foo2 === foo2.prototype.constructor); // true
+		foo2.prototype.constructor(); // foo.prototype
+		
+		var zoo = {
+			bar : function(){
+				console.log(this);
+				console.log(this == zoo);
+			}
+		};
+		
+		zoo.bar(); 	// foo, true
+		var exampleFunc = zoo.bar;
+		console.log(exampleFunc == zoo.bar);	// true
+		
+		exampleFunc(); // global, false
+		
+		
+		////////////////////////////////////
+		// Reference Type
+		////////////////////////////////////
+		/*
+		The value of this in a function context is provided by the caller and determined 
+		by the current form of a call expression (how the function call is written syntactically)
+		If on the left hand side from the call parentheses ( ... ), there is a value of Reference 
+		type then this value is set to the base object of this value of Reference type.
+		In all other cases (i.e. with any other value type which is distinct from the Reference type),
+		this value is always set to null. But since there is no any sense in null for this value, 
+		it is implicitly converted to global object.
+		*/
+		
+		function boo(){
+			return this;
+		}
+		
+		boo(); // global
+		// Pseudo below
+		/*var booReference = {
+			base : global,
+			propertyName : 'foo'
+		};*/
+		
+		function loo(){
+			console.log(this.bar);
+		}
+		
+		var x = {bar : 10};
+		var y = {bar : 20};
+		
+		x.test = loo;
+		y.test = loo;
+		x.test();
+		y.test();
+		
+		// global as reference type is set to null
+		(function(){
+			console.log(this); // global / window
+		})();
+		
+		// more complex examples
+		var woo = {
+			bar : function(){
+				console.log(this);
+			}
+		};
+		
+		woo.bar(); // woo
+		(woo.bar)();	// still woo
+		(woo.bar = woo.bar)(); // find out - Global , not clear
+		(false || woo.bar)();  // find out - Global , not clear
+		(woo.bar, woo.bar)();	// find out - Global , not clear
+		
+		function joo(){
+			function poo(){
+				console.log(this);	// still global
+			}
+			poo();
+		}
+		
+		function A(){
+			console.log(this);	// newly created object
+			this.x = 10;
+		}
+		
+		var a = new A();
+		console.log(a.x);
+		
+		
+		////////////////////////////////////
+		//apply & call  - Manually setting this for a function call
+		////////////////////////////////////
+		/*
+		There are two methods defined in the Function.prototype (therefore they are accessible to all 
+		functions), allowing to specify this value of a function call manually. These are apply and call 
+		methods. Both of them accept as the first argument this value which is used in a called context. 
+		A difference between these methods is insignificant: for the apply the second argument necessarily 
+		should be an array (or, the array-like object, for example, arguments), in turn, the call method can 
+		accept any arguments; obligatory arguments for both methods is only the first — this value.
+		*/
+		var  b = 10;
+		function ff(c){
+			console.log(this.b);	// as given by the passed context
+			console.log(c);
+		};
+		ff.apply({b:30},[40]);
+		ff.call({b:35},[55]);
 	</script>
 </body>
