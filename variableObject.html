@@ -1,0 +1,48 @@
+<body>
+	<script>
+		var a = 10; // global context
+		(function(){
+			var b = 20; // local variable of the function context
+		})();
+		
+		console.log(a);
+		//console.log(b);
+		
+		for(var k in {a:1, b:2}){
+			console.log(k);
+		}
+		console.log(k); // var k still in scope even after loop is finished
+		
+		
+	////////////////////////////////////
+	// Variable Object
+	////////////////////////////////////
+	/*
+			If variables are related with the execution context, it should know where its data are stored and how to get them. 
+			This mechanism is called a variable object.
+			A variable object (in abbreviated form — VO) is a special object related with an execution context and which stores:
+				1) variables (var, VariableDeclaration);
+				2) function declarations (FunctionDeclaration, in abbreviated form FD);
+				3) and function formal parameters
+			declared in the context.
+	*/
+			
+	
+	function foo(x, y, z){
+		console.log(foo.length);	// no of defined arguments
+		console.log(arguments.length);	// no of really passed arguments
+		console.log(arguments.calle === foo); // true, ref to itself
+		console.log(x === arguments[0]);
+		arguments[0] = 20;
+	  console.log(arguments[0]);
+		x = 30;
+		console.log(arguments[0]);
+		z = 40;
+		console.log(arguments[2]); // undefined as it is not passed
+		arguments[2] = 50;
+		console.log(z);	// 40
+	}		
+	
+	foo(10,20);
+	</script>
+</body>

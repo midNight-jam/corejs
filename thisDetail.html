@@ -1,0 +1,23 @@
+<body>
+	<script>
+		var foo = {x:10};
+		var bar = {
+			x : 20,
+			test: function(){
+				console.log(this == bar); // true
+				console.log(this.x);	// 20
+				//this = foo; // Error : not possible as this is immutable
+				console.log(this.x); // still 20 as this cannot be changed
+			}
+		};
+		
+		bar.test();
+		foo.test = bar.test; // adding property test to foo also
+		
+		foo.test();	
+		// false - because now this is not pointing to bar anymore, 
+		// 10  - beacause when called this will point to foo context,
+		// and in that context x is 10;
+	
+	</script>
+</body>
