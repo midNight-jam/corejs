@@ -1,0 +1,95 @@
+<html>
+<body>
+	<script>
+		// Person Factory
+		var Person = function Person(living, age, gender){
+			this.living = living;
+			this.age = age;
+			this.gender = gender;
+			this.getGender = function(){
+				return this.gender;
+			};
+		};
+		
+		var codyA = new Person(true, 22, 'male');
+		
+		var codyB = new Object();
+		codyB.living = true;
+		codyB.age = 33;
+		codyB.gender = 'female';
+		codyB.getGender = function(){ return codyB.gender;};
+		
+		console.log(codyA);
+		console.log(codyB);
+		console.log(typeof codyA);
+		console.log(codyA.constructor);
+		
+		var marr = new Array();
+		console.log(typeof marr);
+		console.log(marr);
+		console.log(marr.constructor);	// logs functon with native code
+
+		var primStr = "foo";
+		var primStr2 = String("foo");	// using constructor wihtout "new" returns a primitive type
+		var oStr = new String("foo");	// using constructor with "new" returns an Object
+		console.log(typeof primStr);
+		console.log(typeof primStr2);
+		console.log(typeof oStr);
+
+		var price1 = 10;
+		var price2 = 10;
+		var price3 = new Number('10');
+		var price4 = price3;
+		console.log(price1 === price2);
+		console.log(price1 === price3);
+		console.log(price4 === price3);
+		price4 = 10;
+		console.log(price4 === price3);
+		
+		
+		var myObj = {};
+		var copObj = myObj;
+		myObj.foo = 'bar';
+		console.log(copObj, myObj);	// refering to same value
+	
+		var objFoo = {same:'same'};
+		var objBar = {same:'same'};
+		console.log(objBar === objFoo);
+		
+		var myNull = null;
+		var myUbdf = undefined;
+		var myFunc = new Function("return");
+		console.log(typeof myNull);
+		console.log(typeof myUbdf);
+		console.log(typeof myFunc);
+		
+		String.augmentedProperties = [];	// to keep track of added properties
+		if(!String.prototype.trimIT){
+			String.prototype.trimIT = function(){	// adding a new functionality
+				return this.replace(/^\s+|\s+$/g,'');
+			}
+			String.augmentedProperties.push('trimIT');
+		}
+		var myStr = '         zzz   ';
+		console.log(myStr.trimIT());
+		console.log(String.augmentedProperties.join());
+		
+		var coo = {};
+		console.log(coo.constructor === Object); // useful for checking who created the instance
+		console.log(coo.constructor);
+
+		var CustomConstructor = function CustomConstructor(){ this.foo = 'Bar';};
+		var inst = new CustomConstructor();
+		console.log(inst.constructor);	// custom objects points to thier constructors
+		console.log(inst instanceof CustomConstructor);	// Logs true as they point to same
+		
+		var str1 = String('aaa');
+		var str2 = new String('aaa');
+		str1.prop = 'some'; // will not work as it is a primitive not an objects
+		str2.prop = 'some';	// will add a custom property becuase str2 is an obj
+		console.log(str2.prop, str1.prop);
+		
+		
+		</script>	
+</body>
+</html>
