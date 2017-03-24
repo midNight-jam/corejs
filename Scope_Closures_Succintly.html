@@ -1,0 +1,72 @@
+<html>
+<body>
+	<script>
+		var foo = 0;
+		console.log(foo);	// logs 0, gloabl scope
+		
+		var myFunc = function(){
+			var foo = 1;
+			console.log(foo); // logs 1, function scope
+		}();
+		
+		eval('var foo = 2; console.log(foo);'); // logs 3, eval scope
+		
+		var bar = 1; // 
+		if(true){
+			bar = 2;
+			for(var i = 3; i <= 5; i++){
+				foo = i;
+				console.log(foo); // logs 3,4,5
+			}
+		}
+		
+		console.log("still i is available ",i);
+		
+		var sayHI = 'Howdyyy';
+		
+		var func1 = function(){
+			var func2 = function(){
+				console.log(sayHI);	// reading through scope chainn
+				console.log("using this ",this.sayHI); // reading through this,
+				//as these are nested function, this refers to gloabl object
+			}();
+		}();
+		
+		var x = 10;
+		var boo = function(){
+			var  y = 20;
+			var bar = function(){
+				var z = 30;
+				console.log(z + y + x);// z is local, y is found in scope of previous function,
+				// and x is found in the gloabl scope
+			}();
+		};
+		boo();
+		
+		var parentFunction = function(){
+			var zoo = 'zoo';
+			return function(){
+				console.log(zoo);	// scope chians zoo
+				console.log(this.zoo);	// logs undefined because window doesnt has a zoo
+				// important this &scope are diff, here this point to window as they are nested
+				// but the zoo var is found in the parent scope due to scope chain
+			}
+		}
+		var nestedFunc = parentFunction();
+		nestedFunc();
+
+		// Closure
+		var countUpFromZero = function(){
+			var count = 0;
+			return function(){
+				return ++count;	// count is defined up in th scope chain, in parent function
+			};
+		}(); // invoking immediately, returning the nested function
+		
+		console.log(countUpFromZero());	//Logs 1
+		console.log(countUpFromZero());	//Logs 2
+		console.log(countUpFromZero());	//Logs 3
+		
+	</script>	
+</body>
+</html>
