@@ -1,0 +1,26 @@
+<html>
+<body>
+	<script>
+			var bool1 = new Boolean(false);
+			var bool2 = Boolean(0);
+			var bool3 = false;
+			console.log(bool1);	// logs Object
+			console.log(bool2);// logs the primitive value
+			console.log(bool3);// logs the primitive value			
+			
+			console.log(typeof bool1);	// logs Object
+			console.log(typeof bool2);	// logs boolean 
+			console.log(typeof bool3);	// logs boolean 
+			
+			var foo = new Boolean(0);	// false
+			var bar = new Boolean(Math); // true
+			console.log(foo);
+			console.log(bar);
+			
+			var falseValue = new Boolean(false);	// we have false Boolean Object, but its still an object thus will result in true
+			console.log(falseValue);
+			if(falseValue)
+				console.log('falseValue is not null thus true');
+	</script>	
+</body>
+</html>
