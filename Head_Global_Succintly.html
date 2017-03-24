@@ -1,0 +1,33 @@
+<html>
+<body>
+	<script>
+			var strVar = 'someString';
+			var funcVar = function(){};
+			strvar = 'someOtherString';
+			funcvar = function(){};
+			
+			console.log('strVar' in window);
+			console.log('funcvar' in window);
+			console.log('strVar' in window);
+			console.log('funcvar' in window);
+			
+			var foo = 1; // global defined manually
+			bar = 2; // global defined manually
+			
+			var fun  = function(){
+				var foo = 1;	// local
+				bar = 2;	// global
+				// Execute annonymous function
+				(function(){
+					var wibble = 1; // local
+					foo = 2; // inherited from scope, due to closure
+					moo = 3; // this will end upbeing a global property
+				})()
+			};
+			fun();
+			
+			console.log(moo);	// accessing the newly created global property
+			
+	</script>	
+</body>
+</html>
