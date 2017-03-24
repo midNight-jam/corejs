@@ -1,0 +1,20 @@
+<html>
+<body>
+	<script>
+		var cod1 = new Object();
+		var cod2 = new Object(undefined);
+		var cod3 = new Object(null);
+		console.log(typeof cod1, typeof cod2, typeof cod3);	// logs object object object
+	
+		// using Object Constructoe to create String, Number etc
+		var str1 = new Object('foo');
+		var no1 = new Object(1);
+		console.log(str1);	// logs the String complex object having the primitive value
+		console.log(no1);	// logs the Number complex object having the primitive value
+		
+		Object.prototype.foo = 'foo';
+		var myStr = 'aaa';
+		console.log(myStr.foo); // finding the property at Object
+	</script>	
+</body>
+</html>

@@ -1,0 +1,109 @@
+<html>
+<body>
+	<script>
+		var add = new Function('n1','n2','return n1 + n2');	// last param has to be the body of the function
+		var simpleAdd = function(n1, n2){ return n1 + n2;};
+		console.log(add(1,5));
+		console.log(simpleAdd(6,5));
+		
+		var yelp = function(){
+			console.log('Iam in yelp');
+		}
+		console.log(yelp() === undefined); // logs true, beacuse even if we dont return anay thing from the function undefined is returned
+	
+		var argAdd = function(){
+			return arguments[0] + arguments[1]; // acessing args via arguments array 
+		}
+		
+		console.log(argAdd(5,3));
+		
+		var myObj = {
+			name : 'object 1',
+			method : function(){console.log(this);}
+		};
+		
+		myObj.method();	// logs the myobj object
+		
+		var myObj2 = function(){console.log(this);};
+		myObj2();	// logs the global object / Window
+		
+		
+		var foo  = function(){
+			console.log(arguments.callee); // Logs foo, as it himeself is the caller of this function
+		}();
+		
+		var myFunc = function(a, b, c, d){
+			console.log("Expected args ", myFunc.length); //	logs 4, the number of arguments the function is expecting
+			console.log(" Expected args ", arguments.callee.length); //	logs 4, the number of arguments the function is expecting
+			return arguments.length;
+		}
+		
+		console.log(myFunc());	// Logs 0
+		console.log(myFunc(23,45,'aa'));	// logs 3
+		
+		var foo = false;
+		var bar = false;
+		var myfunction = function(foo, bar){
+			arguments[0] = true;
+			bar = true;
+			console.log(arguments[0], bar);
+		}
+		myfunction(); 
+		
+		var greet = {
+			runGreet : function(){
+				console.log(this.name, arguments[0],arguments[1]);
+			}
+		};
+		
+		var bob = {name:'bob'};
+		var lisa = {name:'lisa'};
+		
+		
+		// call and apply are used to invoke a method as if it was inside this object
+		// call uses seperate parameters 
+		greet.runGreet.call(bob, 'firstParam', 'Second Param');
+		
+		// apply uses array of params
+		greet.runGreet.apply(lisa,['first','second']);
+		
+		
+		var sayHi = function(f){
+			f();	// calls the passed function
+		};
+		sayHi(function(){ console.log('Call this anonymous function');});
+		
+		var sayWord = function(){console.log('Called by myslef')}(); // the method is called at the same time it is defined
+		console.log(sayWord); // will log undeinfed as we have not returned any value from the function
+
+		// simple call urself
+		(function(msg){
+			console.log(msg);
+		})('HIIIII');
+		
+		!function sayHi(msg){console.log(msg)}('ZZZZZZZ');
+		// if not defined then define and call 
+		
+		var doo = function(){
+			var boo = function(){
+				var goo = function(){
+					console.log(this);	// as the functions are nested the this context will alwars refer 
+					//to the global object.
+				}();
+			}();
+		}();
+		
+		// Function Hoisting
+		var speak = function(){
+			speakYo();	// calling a method before its deifned
+			function speakYo(){console.log('Yooo!!');};
+		}();
+		
+		console.log(sumZZ(2,5));	// calling a method before its deifned
+		
+		 function sumZZ (a,b){
+			return a + b;
+		};
+	</script>	
+</body>
+</html>
