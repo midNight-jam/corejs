@@ -1,0 +1,20 @@
+<html>
+<body>
+	<script>
+			var myObj = null;
+			console.log(typeof myObj);	// Logs 'object'
+			console.log(myObj === null);	// Logs true, only for a real null value
+			// when verifying null always use === triple not == double , as double doesnt ditinguishes between null & undefined
+
+			var initVar;
+			console.log(initVar);
+			console.log(typeof initVar);	// Logs undefined
+			var foo = {};	// confime that javascript returns undefined
+			console.log(foo.bar);	// Logs undefined
+			console.log(typeof foo.bar);	// confime that javascript returns undefined
+			
+			console.log(undefined in this);	// confirm presence of undefined in global
+			// Logs true, beacuse undeifned is declared in global scope
+		</script>	
+</body>
+</html>
