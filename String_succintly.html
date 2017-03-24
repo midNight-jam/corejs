@@ -1,0 +1,17 @@
+<html>
+<body>
+	<script>
+			var str1  = 'foo';
+			var str2 = new String('foo');
+			console.log(str1);	// logs primitve value
+			console.log(str2);	// logs the Object
+			
+			console.log(typeof str1);	// logs string as primitive
+			console.log(typeof str2);	// logs Object
+			
+
+			console.log(str2.constructor);	// apart from __proto__ , constructor property can also be used to reach Constructor
+						
+	</script>	
+</body>
+</html>
