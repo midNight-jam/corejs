@@ -1,0 +1,42 @@
+<html>
+<body>
+	<script>
+		var obj = {'new' : 'foo'};
+		console.log(obj.new);
+		console.log(obj['new']);
+		
+		var foo = {bar: 'bar'};
+		delete foo.bar;	// deleting the property from foo but doesnt delete anything from prototype chain
+		console.log('bar' in foo); // checking for property using "in"
+		
+		var myarr = [];
+		console.log(myarr.foo);	// foo is serached in Array.prototype & later Object.protoype
+		// its looked in objects constructor functoin prototype property / object .
+		//in order to reach constructor every object has "__proto__" property.
+		
+		var myArray = ['foo','bar'];
+		console.log(myArray.join());	// join is defined at Array.prototype.join
+		console.log(myArray.hasOwnProperty('join')); // Logs False because join is not defined in Array
+		console.log(myArray.toLocaleString()); // Logs foo, bar method found in Object
+		
+		var myObj = {foo : 'bar'};
+		console.log(myObj.hasOwnProperty('foo')); // as found in the current object
+		console.log(myObj.hasOwnProperty('toLocaleString'));	// as not found in the current object
+		console.log('foo' in myObj); // found in current object
+		console.log('toString' in myObj); // found in prototype chain
+
+
+		var cody = {
+			age : 23,
+			gender : 'male',
+			class : 'A'
+		};
+		
+		// iterating over the keys of the object, better as we are "NOT" using Object.getKeys()
+		for(var key in cody){
+			if(cody.hasOwnProperty(key))	// this check is required because in will give properties from prototype chain also
+				console.log(key);
+		}
+		</script>	
+</body>
+</html>
