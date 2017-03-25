@@ -1,0 +1,111 @@
+<html>
+<body>
+	<script>
+		var myFunc = function(){};
+		console.log(myFunc.prototype);	 // logs empty object
+		console.log(typeof myFunc.prototype); // logs object
+		
+		Array.prototype.foo = 'fooZZZZ';
+		var myArray = new Array();
+		console.log(myArray.__proto__.foo); // Logs fooZZZZ
+		// because myArray.__proto__ = Array.prototype
+		
+		// Or more verbose way is *.constructor.prototype
+		console.log(myArray.constructor.prototype.foo);
+		// uses prototype chain to find property at Array.prototype.foo
+
+		Object.prototype.boo = 'object-boo';
+		Array.prototype.boo = 'array-boo';
+		var arr = [];
+		console.log(arr.boo); // logs array-boo, as found early in prototype chain
+		
+		
+		var Foo = function Foo(){};
+		Foo.prototype = {};
+		var fooInst = new Foo();
+		console.log(fooInst.constructor === Foo);	// Logs False as we broke the chain
+		console.log(fooInst.constructor);	// Logs Object(), not Foo()
+		
+		var Bar = function Bar(){};
+		var barInst = new Bar();
+		console.log(barInst.constructor === Bar);	// Logs True
+		console.log(barInst.constructor);	// Logs Bar()
+		
+		
+		var Doo = function Doo(){};
+		Doo.prototype = {constructor:Doo};	// preserving the constructor link while replacing the original prototype obj
+		var dooInst = new Doo();
+		console.log(dooInst.constructor === Doo);	// Logs True
+		console.log(dooInst.constructor);	// Logs Doo()
+		
+		
+		// Always latest value
+		
+		var Koo = function Koo(){};
+		Koo.prototype.x = 1;
+		var kooInst = new Koo();
+		console.log(kooInst.x);	// Logs 1
+		
+		Koo.prototype.x = 2;
+		console.log(kooInst.x);	// Logs 2, the KooInst was updated
+		
+		// replacing the prototype, inst getting bind to the prototype which was present at the time of their creation
+		
+		var Loo = function Loo(){};
+		Loo.prototype.x = 1;
+		var looInst = new Loo();
+		console.log(looInst.x); // Logs 1
+		// NOw replacing the prototype object , a new one for instances
+		Loo.prototype = {x : 2};
+		console.log(looInst.x);	// Logs 1, why becuase looInst is still connected to older prototype object
+		
+		var newLooInst = new Loo();	// New INstance is tied to the new prototype object value
+		console.log(newLooInst.x);	// Logs 2
+		
+		
+		var Person = function(){};
+		// All person instances will inherit these properties
+		Person.prototype.legs = 2;
+		Person.prototype.arms = 2;
+		Person.prototype.countLimbs = function(){
+			return this.legs + this.arms;
+		};
+		
+		var chuck = new Person();
+		console.log(chuck.countLimbs());	// Logs 4
+		
+		// using passed params as value, if not provied will use default inherited values
+		var Man = function (legs, arms){
+			if(legs !== undefined)
+				this.legs = legs;
+			if(arms !== undefined)
+				this.arms = arms;
+		};
+		Man.prototype.legs = 2;
+		Man.prototype.arms = 2;
+		Man.prototype.countLimbs = function(){
+			return this.legs + this.arms;
+		};
+		
+		var aman = new Man(0,0);
+		console.log(aman);
+		console.log(aman.countLimbs());
+		var bman = new Man();
+		console.log(bman);
+		console.log(bman.countLimbs());
+		
+		// your own inheritance, when you want to extend a class
+		// Base Class
+		var Worker = function(){this.bar = 'Workerbar';};
+		Worker.prototype.foo = 'WorkerFoo';
+		// Inheriting Class
+		var Chef = function(){ this.goo = 'Chefgoo'};
+		Chef.prototype = new Worker();	// actual INHERITANCE
+		var papu = new Chef();
+		
+		console.log(papu.foo);	// Logs 'Workerfoo' 
+		console.log(papu.bar);	// Logs 'Workerbar'
+		console.log(papu.goo);	// Logs 'Chefgoo'
+	</script>	
+</body>
+</html>
