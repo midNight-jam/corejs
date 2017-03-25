@@ -1,0 +1,26 @@
+<html>
+<body>
+	<script>
+		////////////////////////////////////
+		// Double Ended Queue	(using array)
+		////////////////////////////////////
+		var deque = [];
+		deque.push(1);	// appending at tail
+		deque.push(2);	// appending at tail
+		deque.push(5);	// appending at tail
+		console.log(deque);	// Logs [1,2,5]
+		var headElem = deque.shift();	// removes 1 from deque head
+		console.log(headElem);	//Logs 1
+		console.log(deque);	// Logs [2,5]
+		deque.unshift(0);	// Adds 0 at the head of deque
+		console.log(deque);	// Logs [0,2,5]
+		var last = deque.pop();
+		console.log(last);	//Logs 5
+		console.log(deque);	// Logs [0,2]
+		deque.push(7);	// Adds element at the tail of the deque
+		console.log(deque);	// Logs [0,2,7]
+		console.log(deque.length); //Logs 3
+		
+	</script>
+</body>
+</html>
